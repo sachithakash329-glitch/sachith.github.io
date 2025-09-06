@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT Volunteer Teaching Programme</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #87ceeb;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(30, 60, 114, 0.8), rgba(42, 82, 152, 0.8)), 
+                        url('D:\\Setup Files\\Cursor\\lance-asper-3P3NHLZGCp8-unsplash.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1e3c72;
+        }
+
+        /* About Us */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .objectives {
+            background: #f8f9ff;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 5px solid #2a5298;
+        }
+
+        .objectives h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .objectives ul {
+            list-style: none;
+        }
+
+        .objectives li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .objectives li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2a5298;
+            font-weight: bold;
+        }
+
+        /* Activities */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .activity-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .activity-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #2a5298;
+        }
+
+        .activity-card h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            aspect-ratio: 1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(30, 60, 114, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay span {
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f8f9ff;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e8ff;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2a5298;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #2a5298, #1e3c72);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: #1e3c72;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0,0,0,0.05);
+                padding: 2rem 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .activity-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">ICT Volunteer Programme</div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#activities">Activities</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>ICT Volunteer Teaching Programme</h1>
+            <p>Empowering communities through technology education. Join us in bridging the digital divide and creating opportunities for all.</p>
+            <a href="#contact" class="cta-button">Join Us</a>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="section">
+        <h2>About Us</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Our ICT Volunteer Teaching Programme is dedicated to providing accessible technology education to underserved communities. We believe that everyone deserves the opportunity to learn and grow in our digital world.</p>
+                <p>Through our volunteer-driven approach, we bring together passionate educators, technology professionals, and community members to create meaningful learning experiences that transform lives and open doors to new possibilities.</p>
+            </div>
+            <div class="objectives">
+                <h3>Our Objectives</h3>
+                <ul>
+                    <li>Provide free ICT education to underserved communities</li>
+                    <li>Bridge the digital divide through accessible learning</li>
+                    <li>Empower individuals with practical technology skills</li>
+                    <li>Foster digital literacy and confidence</li>
+                    <li>Create pathways to technology careers</li>
+                    <li>Build strong community networks</li>
+                    <li>Promote inclusive technology access</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities Section -->
+    <section id="activities" class="section">
+        <h2>Our Activities</h2>
+        <div class="activities-grid">
+            <div class="activity-card">
+                <div class="activity-icon">💻</div>
+                <h3>Interactive ICT Lessons</h3>
+                <p>Hands-on computer literacy classes covering basic operations, internet usage, and essential software applications for everyday tasks.</p>
+            </div>
+            <div class="activity-card">
+                <div class="activity-icon">🤖</div>
+                <h3>AI & IoT Sessions</h3>
+                <p>Introduction to Artificial Intelligence and Internet of Things concepts, helping participants understand emerging technologies and their applications.</p>
+            </div>
+            <div class="activity-card">
+                <div class="activity-icon">🌐</div>
+                <h3>Web Development Workshops</h3>
+                <p>Learn to build websites from scratch using HTML, CSS, and JavaScript. Perfect for beginners looking to start a career in web development.</p>
+            </div>
+            <div class="activity-card">
+                <div class="activity-icon">📱</div>
+                <h3>Mobile App Development</h3>
+                <p>Create mobile applications using modern development tools and frameworks, bringing ideas to life on smartphones and tablets.</p>
+            </div>
+            <div class="activity-card">
+                <div class="activity-icon">🔒</div>
+                <h3>Cybersecurity Basics</h3>
+                <p>Essential cybersecurity knowledge to protect personal information and understand online safety practices in our digital world.</p>
+            </div>
+            <div class="activity-card">
+                <div class="activity-icon">📊</div>
+                <h3>Data Analysis Training</h3>
+                <p>Learn to work with data using spreadsheet tools and basic programming, turning information into actionable insights.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section">
+        <h2>Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect fill='%23e6f3ff' width='300' height='300'/><circle fill='%23b8daff' cx='150' cy='150' r='80'/><text x='150' y='160' text-anchor='middle' fill='%231e3c72' font-size='14' font-family='Arial'>Learning Session</text></svg>" alt="Learning Session">
+                <div class="gallery-overlay">
+                    <span>Learning Session</span>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect fill='%23d1e7ff' width='300' height='300'/><rect fill='%23a8d0ff' x='50' y='50' width='200' height='150' rx='10'/><text x='150' y='140' text-anchor='middle' fill='%231e3c72' font-size='14' font-family='Arial'>Workshop</text></svg>" alt="Workshop">
+                <div class="gallery-overlay">
+                    <span>Workshop</span>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect fill='%23f0f8ff' width='300' height='300'/><polygon fill='%23b8daff' points='150,50 200,150 150,250 100,150'/><text x='150' y='160' text-anchor='middle' fill='%231e3c72' font-size='14' font-family='Arial'>Community</text></svg>" alt="Community">
+                <div class="gallery-overlay">
+                    <span>Community</span>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect fill='%23e6f3ff' width='300' height='300'/><circle fill='%23a8d0ff' cx='100' cy='100' r='30'/><circle fill='%23a8d0ff' cx='200' cy='100' r='30'/><circle fill='%23a8d0ff' cx='150' cy='200' r='30'/><text x='150' y='260' text-anchor='middle' fill='%231e3c72' font-size='14' font-family='Arial'>Team Work</text></svg>" alt="Team Work">
+                <div class="gallery-overlay">
+                    <span>Team Work</span>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect fill='%23d1e7ff' width='300' height='300'/><rect fill='%23a8d0ff' x='75' y='75' width='150' height='100' rx='5'/><text x='150' y='140' text-anchor='middle' fill='%231e3c72' font-size='14' font-family='Arial'>Technology</text></svg>" alt="Technology">
+                <div class="gallery-overlay">
+                    <span>Technology</span>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect fill='%23f0f8ff' width='300' height='300'/><path fill='%23b8daff' d='M150 50 L200 150 L150 200 L100 150 Z'/><text x='150' y='160' text-anchor='middle' fill='%231e3c72' font-size='14' font-family='Arial'>Success</text></svg>" alt="Success">
+                <div class="gallery-overlay">
+                    <span>Success</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <h2>Contact Us</h2>
+        <div class="contact-form">
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required placeholder="Tell us about your interest in joining our programme..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; <span id="currentYear"></span> ICT Volunteer Teaching Programme. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const message = formData.get('message');
+            
+            // Simple validation
+            if (!name || !email || !message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Simulate form submission
+            alert('Thank you for your interest! We will get back to you soon.');
+            this.reset();
+        });
+
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'linear-gradient(135deg, rgba(30, 60, 114, 0.95), rgba(42, 82, 152, 0.95))';
+            } else {
+                navbar.style.background = 'linear-gradient(135deg, #1e3c72, #2a5298)';
+            }
+        });
+    </script>
+</body>
+</html>
